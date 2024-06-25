@@ -1,0 +1,71 @@
+### 
+# @name findAll
+GET http://localhost:3001/eventos
+
+### 
+# @name findOne
+GET http://localhost:3001/eventos/{{eventoId}}
+
+### Create Event
+# @name createEvent
+POST http://localhost:3001/eventos
+Content-Type: application/json
+
+{
+  "nome": "New Event", 
+  "descricao": "This is a new event", 
+  "data": "2017-01-01T00:00:00", 
+  "preco": 100 
+}
+###
+@eventoId = {{createEvent.response.body.id }}
+
+### 
+# @name update
+PATCH http://localhost:3001/eventos/{{eventoId}}
+Content-Type: application/json
+
+{
+  "name": "New Event1", 
+  "description": "This is a new event", 
+  "date": "2017-01-01T00:00:00", 
+  "price": 100 
+}
+
+### 
+# @name delete
+DELETE http://localhost:3001/eventos/{{eventoId}}
+
+
+
+
+###
+# @name findAll
+GET http://localhost:3001/eventos/{{eventoId}}/lugares
+
+
+###
+# @name createSpot
+POST http://localhost:3001/eventos/{{eventoId}}/lugares
+Content-Type: application/json
+
+{
+  "nome": "A8"
+}
+
+###
+@lugarNome = {{createSpot.response.body.name }}
+
+
+###
+# @name reserveSpot
+POST http://localhost:3001/eventos/{{eventoId}}/reservar
+Content-Type: application/json
+x-api-token: 0001
+
+{
+  "lugares": ["{{lugarNome}}"],
+  "tipo_ingresso": "meia",
+  "email": "user1@test.com"
+}
+
